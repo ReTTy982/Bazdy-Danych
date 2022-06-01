@@ -113,6 +113,7 @@ id_produktu number(10,0),
 foreign key (id_produktu) references produkt(id_produktu)
 ) tablespace "USERS";
 
+
 create table stan_produktow (
     id_tabeli number(4,0) primary key,
     id_produktu number(10,0),
@@ -382,19 +383,6 @@ from pracownicy p join rola r
 using (id_roli)
 where r.nazwa_roli = 'Zarzad';
 
-create or replace view naprawa_maszyny as
-update maszyny
-set stopien_zuzycia = '100'
-where id_maszyny = any(select id_maszyny
-                        from pracownicy
-                        where id_roli = 3);
-
-create or replace view sprawdz_zapotrzebowanie as
-select p.nazwa, p.ilosc
-from produkt p join stan_produktow s
-using (id_produktu)
-where &id_maszyny  and rodzaj_stanu = 'Z';
-
 
 create or replace view sprawdz_stan_produktow as
 select p.nazwa, p.ilosc
@@ -444,6 +432,158 @@ INSERT INTO maszyny ( stopien_zuzycia,nazwa_maszyny) values (89, 'maszyna 8');
 INSERT INTO maszyny ( stopien_zuzycia,nazwa_maszyny ) values (78, 'maszyna 9');
 INSERT INTO maszyny (stopien_zuzycia,nazwa_maszyny) values (54, 'maszyna 10');
 INSERT INTO maszyny ( stopien_zuzycia,nazwa_maszyny ) values (64, 'maszyna 11');
+
+
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny, id_maszyny  ) values( 'Honorata','Hrycyk',to_date('3/1/11','RR/MM/DD'),4744,1,13,'W' , 11);
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny, id_maszyny  ) values( 'Fabian','Klimek',to_date('5/7/15','RR/MM/DD'),4890,1,4,'O' , 1);
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny, id_maszyny  ) values( 'Magdalena','Kmiecik',to_date('88/5/4','RR/MM/DD'),8422,1,9,'O' , 11);
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny, id_maszyny  ) values( 'Magdalena','Rataj',to_date('87/11/16','RR/MM/DD'),3343,1,8,'O' , 7);
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny, id_maszyny  ) values( 'Edyta','Kulas',to_date('3/5/6','RR/MM/DD'),7300,1,17,'O' , 5);
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny, id_maszyny  ) values( 'Daniel','Danielak',to_date('91/4/7','RR/MM/DD'),5538,1,2,'W' , 10);
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny ) values( 'Edyta','Klimek',to_date('2/4/6','RR/MM/DD'),3143,1,8,'O');
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny, id_maszyny  ) values( 'Cecylia','Kirchner',to_date('87/4/18','RR/MM/DD'),5258,1,9,'O' , 9);
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny ) values( 'Arkadiusz','Ryba',to_date('99/7/5','RR/MM/DD'),3042,1,6,'W');
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny ) values( 'Czeslaw','Ryba',to_date('94/8/19','RR/MM/DD'),3737,1,0,'O');
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny ) values( 'Ludwik','Gancarczyk',to_date('12/3/7','RR/MM/DD'),4593,1,3,'W');
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny, id_maszyny  ) values( 'Ludwik','Dabek',to_date('7/1/3','RR/MM/DD'),6237,1,15,'W' , 4);
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny, id_maszyny  ) values( 'Fabian','Blaszczykowski',to_date('8/2/2','RR/MM/DD'),4483,1,13,'O' , 7);
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny ) values( 'Beata','Stoch',to_date('82/1/24','RR/MM/DD'),8774,1,18,'O');
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny, id_maszyny  ) values( 'Grazyna','Paszek',to_date('92/5/4','RR/MM/DD'),8959,1,8,'O' , 7);
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny, id_maszyny  ) values( 'Grzegorz','Michalak',to_date('83/2/21','RR/MM/DD'),8896,1,15,'W' , 4);
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny ) values( 'Honorata','Kaczor',to_date('87/5/11','RR/MM/DD'),7651,1,3,'O');
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny ) values( 'Andrzej','Czachor',to_date('12/1/8','RR/MM/DD'),7416,1,7,'O');
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny, id_maszyny  ) values( 'Agnieszka','Aleksandrowicz',to_date('18/6/15','RR/MM/DD'),140912,4,6,'O' , 10);
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny, id_maszyny  ) values( 'Konrad','Jank',to_date('95/2/13','RR/MM/DD'),8534,1,15,'W' , 3);
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny, id_maszyny  ) values( 'Grazyna','Jagalla',to_date('93/8/11','RR/MM/DD'),5733,1,0,'O' , 2);
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny ) values( 'Ludwik','Rys',to_date('88/5/12','RR/MM/DD'),7437,1,18,'O');
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny, id_maszyny  ) values( 'Bartek','Korona',to_date('95/1/10','RR/MM/DD'),8974,1,16,'W' , 2);
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny ) values( 'Agnieszka','Kulas',to_date('97/6/12','RR/MM/DD'),4965,1,18,'O');
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny, id_maszyny  ) values( 'Grazyna','Mackiewicz',to_date('99/1/4','RR/MM/DD'),7096,1,0,'O' , 11);
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny ) values( 'Magdalena','Skrok',to_date('94/10/24','RR/MM/DD'),4874,1,15,'O');
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny, id_maszyny  ) values( 'Jan','Kandefer',to_date('94/1/15','RR/MM/DD'),3366,1,7,'O' , 8);
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny, id_maszyny  ) values( 'Magdalena','Baran',to_date('17/7/3','RR/MM/DD'),5272,1,1,'W' , 1);
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny, id_maszyny  ) values( 'Grazyna','Gucwa',to_date('86/8/20','RR/MM/DD'),5767,1,1,'O' , 11);
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny ) values( 'Iwona','Stoch',to_date('91/8/12','RR/MM/DD'),8799,1,3,'W');
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny, id_maszyny  ) values( 'Dariusz','Sulej',to_date('80/2/9','RR/MM/DD'),5369,1,14,'O' , 11);
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny, id_maszyny  ) values( 'Jan','Masny',to_date('6/2/4','RR/MM/DD'),6468,2,9,'O' , 7);
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny, id_maszyny  ) values( 'Edyta','Rys',to_date('19/2/3','RR/MM/DD'),10533,3,4,'O' , 1);
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny ) values( 'Edyta','Kot',to_date('99/3/11','RR/MM/DD'),7576,1,20,'W');
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny ) values( 'Cecylia','Klimek',to_date('0/2/5','RR/MM/DD'),7796,1,17,'O');
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny ) values( 'Dariusz','Kowal',to_date('18/11/9','RR/MM/DD'),8913,1,2,'O');
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny ) values( 'Damian','Jurczyk',to_date('92/6/3','RR/MM/DD'),7808,1,16,'O');
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny, id_maszyny  ) values( 'Jacek','Gancarczyk',to_date('11/10/6','RR/MM/DD'),4542,1,12,'W' , 10);
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny ) values( 'Karolina','Mackiewicz',to_date('95/4/13','RR/MM/DD'),19718,3,11,'O');
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny, id_maszyny  ) values( 'Andrzej','Ochab',to_date('15/3/21','RR/MM/DD'),84486,4,0,'O' , 3);
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny, id_maszyny  ) values( 'Edyta','Zielonko',to_date('91/3/13','RR/MM/DD'),4729,1,12,'O' , 10);
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny, id_maszyny  ) values( 'Bartek','Kurtyka',to_date('1/9/10','RR/MM/DD'),4659,1,1,'O' , 6);
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny ) values( 'Maciej','Gut',to_date('8/1/17','RR/MM/DD'),4146,1,7,'O');
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny, id_maszyny  ) values( 'Jacek','Pakusz',to_date('80/8/5','RR/MM/DD'),8494,1,14,'O' , 10);
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny ) values( 'Fabian','Zielonko',to_date('97/5/17','RR/MM/DD'),5336,1,2,'O');
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny ) values( 'Ludwik','Kot',to_date('83/1/15','RR/MM/DD'),8947,1,17,'O');
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny, id_maszyny  ) values( 'Karolina','Bareja',to_date('98/4/23','RR/MM/DD'),7002,1,0,'O' , 5);
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny, id_maszyny  ) values( 'Jakub','Sulej',to_date('3/3/20','RR/MM/DD'),7958,1,17,'O' , 6);
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny ) values( 'Czeslaw','Krupscy',to_date('1/4/10','RR/MM/DD'),6082,1,10,'O');
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny, id_maszyny  ) values( 'Arkadiusz','Gucwa',to_date('89/10/2','RR/MM/DD'),4054,1,14,'O' , 6);
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny, id_maszyny  ) values( 'Jakub','Zarzecki',to_date('19/12/7','RR/MM/DD'),4170,1,8,'O' , 9);
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny ) values( 'Magdalena','Gut',to_date('12/12/10','RR/MM/DD'),5266,1,8,'O');
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny, id_maszyny  ) values( 'Iwona','Rusek',to_date('14/1/4','RR/MM/DD'),5017,1,16,'O' , 8);
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny, id_maszyny  ) values( 'Arkadiusz','Tasior',to_date('0/3/12','RR/MM/DD'),4840,1,11,'W' , 11);
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny, id_maszyny  ) values( 'Konrad','Rusek',to_date('12/3/13','RR/MM/DD'),3121,1,10,'W' , 6);
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny ) values( 'Grzegorz','Zarzecki',to_date('94/6/15','RR/MM/DD'),6615,2,11,'O');
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny, id_maszyny  ) values( 'Beata','Ochab',to_date('99/9/7','RR/MM/DD'),3690,1,13,'O' , 3);
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny, id_maszyny  ) values( 'Fabian','Imielinski',to_date('88/6/23','RR/MM/DD'),3817,1,19,'O' , 4);
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny, id_maszyny  ) values( 'Cecylia','Hrycyk',to_date('1/11/25','RR/MM/DD'),3359,1,17,'W' , 5);
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny, id_maszyny  ) values( 'Hubert','Pakusz',to_date('10/11/22','RR/MM/DD'),7664,2,20,'O' , 1);
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny, id_maszyny  ) values( 'Beata','Orski',to_date('90/9/15','RR/MM/DD'),7474,1,17,'O' , 9);
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny, id_maszyny  ) values( 'Bartek','Aleksandrowicz',to_date('5/2/18','RR/MM/DD'),4732,1,9,'O' , 10);
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny, id_maszyny  ) values( 'Czeslaw','Fikus',to_date('81/3/21','RR/MM/DD'),3931,1,6,'O' , 9);
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny ) values( 'Czeslaw','Dziuba',to_date('99/11/14','RR/MM/DD'),3716,1,9,'O');
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny, id_maszyny  ) values( 'Dariusz','Piecha',to_date('2/12/2','RR/MM/DD'),3255,1,19,'O' , 10);
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny, id_maszyny  ) values( 'Agnieszka','Gorka',to_date('93/5/18','RR/MM/DD'),5508,1,3,'O' , 7);
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny, id_maszyny  ) values( 'Konrad','Rys',to_date('18/4/21','RR/MM/DD'),5287,1,9,'O' , 2);
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny ) values( 'Fabian','Gucwa',to_date('13/2/19','RR/MM/DD'),4615,1,9,'O');
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny, id_maszyny  ) values( 'Honorata','Aleksandrowicz',to_date('98/10/1','RR/MM/DD'),6070,1,1,'O' , 3);
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny, id_maszyny  ) values( 'Grazyna','Kulas',to_date('4/5/3','RR/MM/DD'),3609,1,11,'O' , 8);
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny, id_maszyny  ) values( 'Daniel','Bareja',to_date('98/3/11','RR/MM/DD'),7707,1,0,'O' , 6);
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny, id_maszyny  ) values( 'Arkadiusz','Rys',to_date('83/10/7','RR/MM/DD'),5108,1,15,'W' , 2);
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny, id_maszyny  ) values( 'Beata','Rusek',to_date('12/2/7','RR/MM/DD'),8918,1,12,'W' , 1);
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny, id_maszyny  ) values( 'Damian','Kurtyka',to_date('91/11/13','RR/MM/DD'),5449,1,17,'O' , 2);
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny ) values( 'Iwona','Wilk',to_date('14/12/13','RR/MM/DD'),8057,1,17,'W');
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny, id_maszyny  ) values( 'Dariusz','Kicki',to_date('81/10/24','RR/MM/DD'),3000,1,20,'O' , 5);
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny, id_maszyny  ) values( 'Czeslaw','Ryba',to_date('95/6/4','RR/MM/DD'),4957,1,9,'O' , 7);
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny, id_maszyny  ) values( 'Magdalena','Kozubek',to_date('8/7/20','RR/MM/DD'),10386,2,20,'O' , 10);
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny, id_maszyny  ) values( 'Ludwik','Tasior',to_date('1/5/4','RR/MM/DD'),6656,1,0,'O' , 8);
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny, id_maszyny  ) values( 'Maciej','Wilk',to_date('4/3/6','RR/MM/DD'),6216,1,7,'O' , 7);
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny, id_maszyny  ) values( 'Daniel','Leja',to_date('13/12/15','RR/MM/DD'),4016,1,17,'O' , 10);
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny ) values( 'Ludwik','Wolny',to_date('14/7/20','RR/MM/DD'),5763,1,10,'O');
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny ) values( 'Iwona','Kirchner',to_date('82/11/6','RR/MM/DD'),5044,1,9,'O');
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny ) values( 'Czeslaw','Kubicz',to_date('89/10/13','RR/MM/DD'),3687,1,16,'O');
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny, id_maszyny  ) values( 'Jakub','Michalak',to_date('99/8/1','RR/MM/DD'),8576,1,15,'O' , 8);
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny ) values( 'Konrad','Gawron',to_date('7/5/19','RR/MM/DD'),3476,1,6,'O');
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny, id_maszyny  ) values( 'Czeslaw','Czachor',to_date('89/8/25','RR/MM/DD'),7809,1,3,'W' , 7);
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny, id_maszyny  ) values( 'Daniel','Kirchner',to_date('17/12/9','RR/MM/DD'),11074,2,8,'O' , 3);
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny, id_maszyny  ) values( 'Jan','Dziuba',to_date('9/12/25','RR/MM/DD'),8787,1,16,'O' , 8);
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny, id_maszyny  ) values( 'Grazyna','Dabek',to_date('0/1/8','RR/MM/DD'),3207,1,10,'O' , 7);
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny ) values( 'Grazyna','Hejmo',to_date('81/11/1','RR/MM/DD'),7582,2,17,'O');
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny, id_maszyny  ) values( 'Daniel','Stoch',to_date('98/10/2','RR/MM/DD'),8416,1,9,'O' , 11);
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny, id_maszyny  ) values( 'Beata','Larek',to_date('95/4/2','RR/MM/DD'),3754,1,5,'O' , 5);
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny, id_maszyny  ) values( 'Honorata','Masny',to_date('99/3/24','RR/MM/DD'),6111,1,13,'O' , 3);
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny ) values( 'Karolina','Hrycyk',to_date('92/5/20','RR/MM/DD'),7850,1,4,'O');
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny, id_maszyny  ) values( 'Hubert','Paliwoda',to_date('89/4/8','RR/MM/DD'),8283,1,4,'O' , 9);
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny, id_maszyny  ) values( 'Hubert','Klimek',to_date('5/5/6','RR/MM/DD'),8790,1,16,'O' , 9);
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny ) values( 'Czeslaw','Hejmo',to_date('15/11/6','RR/MM/DD'),5557,1,14,'O');
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny ) values( 'Beata','Hejmo',to_date('82/7/6','RR/MM/DD'),14288,3,15,'O');
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny, id_maszyny  ) values( 'Grzegorz','Piecha',to_date('85/1/7','RR/MM/DD'),7060,1,19,'O' , 8);
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny, id_maszyny  ) values( 'Damian','Otys',to_date('81/6/12','RR/MM/DD'),5425,1,4,'O' , 1);
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny ) values( 'Konrad','Hrycyk',to_date('80/10/14','RR/MM/DD'),3799,1,4,'W');
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny, id_maszyny  ) values( 'Iwona','Kwiek',to_date('93/6/10','RR/MM/DD'),3877,1,6,'O' , 5);
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny ) values( 'Dariusz','Fikus',to_date('93/12/12','RR/MM/DD'),3987,1,5,'O');
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny ) values( 'Damian','Rys',to_date('8/10/9','RR/MM/DD'),7771,1,12,'O');
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny ) values( 'Jakub','Rataj',to_date('12/11/19','RR/MM/DD'),5853,1,16,'O');
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny, id_maszyny  ) values( 'Hubert','Fikus',to_date('80/4/20','RR/MM/DD'),3363,1,4,'O' , 4);
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny, id_maszyny  ) values( 'Edyta','Chmiel',to_date('86/8/23','RR/MM/DD'),5022,1,17,'O' , 7);
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny, id_maszyny  ) values( 'Grazyna','Gut',to_date('1/1/19','RR/MM/DD'),5838,1,8,'O' , 8);
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny, id_maszyny  ) values( 'Jan','Larek',to_date('92/9/9','RR/MM/DD'),7616,1,6,'O' , 5);
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny ) values( 'Beata','Gasienica',to_date('92/7/9','RR/MM/DD'),12227,3,13,'W');
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny ) values( 'Jan','Gancarczyk',to_date('11/3/21','RR/MM/DD'),4254,1,11,'O');
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny, id_maszyny  ) values( 'Bartek','Pakusz',to_date('82/7/3','RR/MM/DD'),6933,1,13,'O' , 4);
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny, id_maszyny  ) values( 'Dariusz','Baran',to_date('13/4/11','RR/MM/DD'),6096,1,18,'O' , 2);
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny, id_maszyny  ) values( 'Jacek','Gucwa',to_date('11/4/4','RR/MM/DD'),6147,1,1,'O' , 10);
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny, id_maszyny  ) values( 'Ludwik','Tarczynski',to_date('90/8/18','RR/MM/DD'),8037,1,11,'O' , 11);
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny, id_maszyny  ) values( 'Jakub','Gradzik',to_date('10/7/17','RR/MM/DD'),6471,1,3,'O' , 2);
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny, id_maszyny  ) values( 'Agnieszka','Pawlak',to_date('12/1/23','RR/MM/DD'),4918,1,1,'O' , 11);
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny, id_maszyny  ) values( 'Grzegorz','Panus',to_date('16/11/11','RR/MM/DD'),4757,1,9,'O' , 2);
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny ) values( 'Iwona','Stoch',to_date('91/12/15','RR/MM/DD'),5748,1,12,'W');
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny, id_maszyny  ) values( 'Andrzej','Gancarczyk',to_date('91/11/20','RR/MM/DD'),6741,1,12,'O' , 1);
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny, id_maszyny  ) values( 'Jakub','Hernik',to_date('0/5/22','RR/MM/DD'),8528,1,4,'O' , 1);
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny ) values( 'Konrad','Ryba',to_date('87/7/2','RR/MM/DD'),3282,1,14,'O');
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny ) values( 'Konrad','Borys',to_date('16/2/6','RR/MM/DD'),4283,1,13,'O');
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny ) values( 'Magdalena','Wasiak',to_date('92/9/2','RR/MM/DD'),4190,1,0,'O');
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny ) values( 'Cecylia','Tyszka',to_date('15/5/23','RR/MM/DD'),3352,1,19,'W');
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny ) values( 'Fabian','Kmiecik',to_date('9/5/25','RR/MM/DD'),4179,1,3,'O');
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny, id_maszyny  ) values( 'Ignacy','Antos',to_date('4/5/8','RR/MM/DD'),5300,1,9,'O' , 3);
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny ) values( 'Magdalena','Sulej',to_date('15/8/25','RR/MM/DD'),4438,1,16,'O');
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny, id_maszyny  ) values( 'Agnieszka','Redyk',to_date('7/4/20','RR/MM/DD'),5089,1,17,'O' , 8);
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny, id_maszyny  ) values( 'Hubert','Larek',to_date('11/1/6','RR/MM/DD'),7772,1,11,'O' , 6);
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny ) values( 'Bartek','Kandefer',to_date('20/6/8','RR/MM/DD'),3194,1,15,'O');
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny ) values( 'Jakub','Imielinski',to_date('96/11/3','RR/MM/DD'),5210,2,6,'O');
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny, id_maszyny  ) values( 'Jan','Leja',to_date('89/11/14','RR/MM/DD'),8966,1,13,'O' , 8);
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny, id_maszyny  ) values( 'Daniel','Stoch',to_date('6/7/1','RR/MM/DD'),3212,1,2,'O' , 11);
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny, id_maszyny  ) values( 'Daniel','Kaczor',to_date('14/12/8','RR/MM/DD'),5166,1,3,'O' , 3);
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny ) values( 'Edyta','Pawlak',to_date('82/2/11','RR/MM/DD'),7547,1,8,'O');
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny ) values( 'Hubert','Bury',to_date('87/9/4','RR/MM/DD'),6964,1,8,'W');
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny ) values( 'Fabian','Obrebscy',to_date('20/12/3','RR/MM/DD'),18473,3,13,'W');
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny ) values( 'Jacek','Rys',to_date('17/1/12','RR/MM/DD'),4458,1,12,'O');
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny ) values( 'Ludwik','Obrebscy',to_date('15/7/11','RR/MM/DD'),4905,1,11,'O');
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny, id_maszyny  ) values( 'Ignacy','Orski',to_date('5/9/22','RR/MM/DD'),7725,1,2,'O' , 5);
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny ) values( 'Bartek','Fogiel',to_date('90/3/15','RR/MM/DD'),8655,1,15,'O');
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny ) values( 'Edyta','Otys',to_date('16/10/8','RR/MM/DD'),3993,1,6,'O');
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny, id_maszyny  ) values( 'Hubert','Ryba',to_date('14/9/20','RR/MM/DD'),6679,1,0,'O' , 11);
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny ) values( 'Honorata','Gradzik',to_date('93/12/25','RR/MM/DD'),5630,1,4,'O');
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny ) values( 'Beata','Kaczor',to_date('1/9/8','RR/MM/DD'),4690,1,11,'O');
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny ) values( 'Daniel','Tasior',to_date('18/12/13','RR/MM/DD'),4428,1,6,'O');
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny, id_maszyny  ) values( 'Fabian','Adamiak',to_date('97/12/6','RR/MM/DD'),6411,1,6,'O' , 6);
+INSERT INTO pracownicy (  imie ,nazwisko, data_zatrudnienia , pensja , ID_roli, dni_urlopu, obecny ) values( 'Jakub','Gancarczyk',to_date('96/2/24','RR/MM/DD'),7035,1,6,'O');
 
 
 
@@ -517,10 +657,33 @@ insert into produkt(  nazwa, ilosc) values( 'Maka',12);
 insert into produkt(  nazwa, ilosc) values(  'Witaminy',15);
 insert into produkt(  nazwa, ilosc) values( 'Miod',15);
 
-insert into stan_produktow( id_maszyny,rodzaj_stanu)values(1,11,'Z');
-insert into stan_produktow( id_maszyny,rodzaj_stanu)values(2,11,'O');
-insert into stan_produktow( id_maszyny,rodzaj_stanu)values(6,11,'O');
-insert into stan_produktow( id_maszyny,rodzaj_stanu)values(7,11,'Z');
+insert into produkt( nazwa,ilosc) values ( 'kukurydza', 7900);
+insert into produkt( nazwa,ilosc) values ( 'maka', 1350);
+insert into produkt( nazwa,ilosc) values ( 'kakao', 2890);
+insert into produkt( nazwa,ilosc) values ( 'miod',180);
+insert into produkt( nazwa,ilosc) values (  'cukier', 6900);
+insert into produkt( nazwa,ilosc) values (  'syrop',8100);
+insert into produkt( nazwa,ilosc) values ( 'sol',190);
+insert into produkt( nazwa,ilosc) values ( 'aromaty',75);
+insert into produkt( nazwa,ilosc) values ( 'witaminy',310);
+insert into produkt( nazwa,ilosc) values ( 'zelazo',18);
+
+insert into magazyn(sektor,id_produktu) values ( 'kukurydza',58 );
+insert into magazyn(sektor,id_produktu) values ( 'maka', 59);
+insert into magazyn(sektor,id_produktu) values ( 'kakao', 60);
+insert into magazyn(sektor,id_produktu) values ( 'miod',61);
+insert into magazyn(sektor,id_produktu) values (  'cukier',62 );
+insert into magazyn(sektor,id_produktu)values (  'syrop',63);
+insert into magazyn(sektor,id_produktu)values ( 'sol',64);
+insert into magazyn(sektor,id_produktu)values ( 'aromaty',65);
+insert into magazyn(sektor,id_produktu)values ( 'witaminy',66);
+insert into magazyn(sektor,id_produktu)values ( 'zelazo',67);
+
+
+insert into stan_produktow( id_produktu,id_maszyny,rodzaj_stanu)values(1,11,'Z');
+insert into stan_produktow( id_produktu,id_maszyny,rodzaj_stanu)values(2,11,'O');
+insert into stan_produktow(id_produktu, id_maszyny,rodzaj_stanu)values(6,11,'O');
+insert into stan_produktow(id_produktu, id_maszyny,rodzaj_stanu)values(7,11,'Z');
 
 
 insert into transakcje(  cena,data_zawarcia,rodzaj_transakcji)values(4020,to_date('93/10/13','RR/MM/DD'), 'S' );
@@ -576,68 +739,4 @@ insert into tabela_zapisu(id_transakcji,id_produktu)values(2,56);
 
 -- usuwanie sprzetu
 
-update pracownicy
-set id_maszyny = null
-where &id_maszyny = id;
 
-update stan_produktow
-set id_maszyny = null
-where &id_maszyny = id_maszyny;
-
-delete maszyny
-where &id_maszyny = id_maszyny;
-
-
---ustawianie pensji pracownika
-update pracownicy 
-set &pensja
-where &id_pracownika;
-
--- przydzial pracownikow
-update pracownicy 
-set &id_maszyny
-where &id_pracownika;
-
-
-
---dodaj transakcje
-create or replace view name as dodaj_transakcje 
-insert into transakcje(cena,data_transakcji,rodzaj_transakcji)
-values(&cena,todate(&rok,&miesiac,&dzien,'YYYY\MM\DD'),&rodzaj_transakcji);
-
---usuwanie transakcji
-create or replace view name as usun_transakcjce
-
-delete from produkty
-where id_produktu = any(select id_produktu 
-                        from tabela_zapisu 
-                        where &id_transakcji= id_transakcji);
-delete from tabela_zapisu 
-where &id_transakcji = id_transakcji;
-
-delete from transakcje
-where &id_transakcji= id_transakcji;
-
-
--- dodawanie produktu
-
-create or replace view name as usuwanie_zapotrzebowania
-
-delete from produkty
-where id_produktu = (select id_produktu 
-                    from stan_produktow
-                    where &id_tabeli);
-delete from stan_produktow
-where &id_tabeli;
-
--- dodawanie produktow
-create or replace view name as dodwanie_produktow
-insert into produkt(nazwa,ilosc)values(&nazwa,&ilosc);
-
---dodawanie maszyn 
-create or replace view name as dodwanie maszyn
-insert into maszyny(nazwa_maszyny,stopien_zuzycia) values(&nazwa_maszyny,&stopien_zuzycia);
-
---dodwanie pracownikow
-
-create or replace view name as dodwanie_pracownikow
